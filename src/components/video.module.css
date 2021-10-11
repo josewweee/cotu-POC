@@ -1,0 +1,10 @@
+.video {
+  border: 2px solid #1c6ea4;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  margin: 0.5rem;
+  width: 20rem;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+}

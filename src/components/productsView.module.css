@@ -1,0 +1,13 @@
+.container {
+  border: 2px solid #1c6ea4;
+  border-radius: 8px;
+  margin: auto;
+  display: block;
+  height: 10rem;
+  width: 10rem;
+}
+
+.image {
+  height: 100px;
+  width: 100px;
+}
