@@ -1,13 +1,22 @@
 .container {
-  border: 2px solid #1c6ea4;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   margin: auto;
-  display: block;
-  height: 10rem;
-  width: 10rem;
+  align-items: center;
 }
 
 .image {
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  width: 150px;
+}
+
+.title {
+  margin-bottom: 0.51rem;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0;
+}
+.subtitle {
+  margin-top: 0;
 }
