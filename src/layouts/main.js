@@ -106,8 +106,6 @@ const MainLayout = () => {
       <Video name={videoName} />
       <span>{`${videoTime} Seconds`}</span>
       <ProductsView data={products} />
-      <button onClick={() => getProducts('7788')}>get products 7788</button>
-      <button onClick={() => getProductTags('7788')}>get tags tags 7788</button>
     </div>
   );
 };

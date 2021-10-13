@@ -36,7 +36,6 @@
     ]
   },
   "devDependencies": {
-    "video.js": "^7.15.4",
     "web-vitals": "^2.1.0"
   }
 }
