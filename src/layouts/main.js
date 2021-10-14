@@ -105,7 +105,9 @@ const MainLayout = () => {
       <Recorder returnFile={getFile} />
       <Video name={videoName} />
       <span>{`${videoTime} Seconds`}</span>
-      <ProductsView data={products} />
+      <div className={styles.products}>
+        <ProductsView data={products} />
+      </div>
     </div>
   );
 };
