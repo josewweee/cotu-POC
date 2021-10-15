@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { videoIds } from '../data/ids';
 import { getProducts, getProductTags } from '../api/products';
 import { ProductsView } from '../components/productsView';
+import VideoIframe from '../components/videoIframe';
 
 const MainLayout = () => {
   const [fileId, setFileId] = useState(null);
@@ -108,6 +109,7 @@ const MainLayout = () => {
       <div className={styles.products}>
         <ProductsView data={products} />
       </div>
+      <VideoIframe />
     </div>
   );
 };
