@@ -20,4 +20,3 @@ export const getProductTags = async (id) => {
   return response.data.data[PRODUCTS_SLOT];
   // return tags[PRODUCTS_SLOT];
 };
-//
