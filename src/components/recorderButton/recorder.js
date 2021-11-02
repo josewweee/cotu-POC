@@ -77,7 +77,14 @@ const Recorder = ({ returnFile, scanningFirstTime }) => {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.outlineCircle} onClick={() => toggleRecord()}>
+        <div
+          className={
+            scanningFirstTime
+              ? styles.cleanCircleContainer
+              : styles.outlineCircle
+          }
+          onClick={() => toggleRecord()}
+        >
           {isRecording ? (
             <div className={styles.stopIcon}>
               <StopRecording />
