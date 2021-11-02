@@ -1,0 +1,48 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "Women's Summit L2 Power Grid™ Lightweight Hoodie",
+      "brand": {
+        "id": "1",
+        "name": "The North Face",
+        "logo": "https://test-sport-images.s3.amazonaws.com/the-north-face-1.svg",
+        "link": "https://www.thenorthface.com.co/",
+        "description": "The North Face is an American outdoor recreation products company. The North Face produces outdoor clothing, footwear, and related equipment. Founded in 1968 to supply climbers, the company's logo draws inspiration from Half Dome, in Yosemite National Park. By the late 1990s, the label had expanded beyond outdoor enthusiasts by focusing on street couture and since the 2000s it is regarded as a streetwear style symbol label. In 2000, it was bought by VF Corporation.",
+        "bannerImage": "https://td-cotu-js-images.s3.amazonaws.com/TNF.jpeg",
+        "createdAt": "2021-08-25T21:57:02.192Z"
+      },
+      "link": "https://www.thenorthface.com/shop/womens-summit-series/womens-summit-l2-power-grid-lightweight-hoodie-nf0a3sqa?variationId=A91",
+      "src": "https://test-sport-images.s3.amazonaws.com/products/TheNorthFace_Tops_Hoodie_WomensSummitL2PowerGrid_01_01.png",
+      "alt": "Women's Summit L2 Power Grid™ Lightweight Hoodie",
+      "subtype": {
+        "id": 3,
+        "name": "Hoodie",
+        "type": { "id": "1", "name": "Tops" }
+      },
+      "description": null
+    },
+    {
+      "id": "2",
+      "name": "Men's Short Sleeve Half Dome Triblend Tee",
+      "brand": {
+        "id": "1",
+        "name": "The North Face",
+        "logo": "https://test-sport-images.s3.amazonaws.com/the-north-face-1.svg",
+        "link": "https://www.thenorthface.com.co/",
+        "description": "The North Face is an American outdoor recreation products company. The North Face produces outdoor clothing, footwear, and related equipment. Founded in 1968 to supply climbers, the company's logo draws inspiration from Half Dome, in Yosemite National Park. By the late 1990s, the label had expanded beyond outdoor enthusiasts by focusing on street couture and since the 2000s it is regarded as a streetwear style symbol label. In 2000, it was bought by VF Corporation.",
+        "bannerImage": "https://td-cotu-js-images.s3.amazonaws.com/TNF.jpeg",
+        "createdAt": "2021-08-25T21:57:02.192Z"
+      },
+      "link": "https://www.thenorthface.com/shop/mens-short-sleeve-half-dome-triblend-tee-nf0a4m4e?variationId=DVF",
+      "src": "https://test-sport-images.s3.amazonaws.com/products/TheNorthFace_Tops_Tshirt_MensWanderShortSleeve_01_01.png",
+      "alt": "Mens Short Sleeve",
+      "subtype": {
+        "id": 1,
+        "name": "T-shirt",
+        "type": { "id": "1", "name": "Tops" }
+      },
+      "description": null
+    }
+  ]
+}

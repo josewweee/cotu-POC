@@ -1,0 +1,25 @@
+.container {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  color: #d7e5cf;
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+}
+
+.name {
+  margin-right: 5.5px;
+}
+
+.timeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.time {
+  margin-left: 5.5px;
+}

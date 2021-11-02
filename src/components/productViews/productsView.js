@@ -7,8 +7,8 @@ export const ProductsView = ({ data }) => {
         <>
           <div className={styles.container}>
             <img src={prod?.src} alt="Prod img" className={styles.image} />
-            <p className={styles.title}>{prod?.name}</p>
-            <p className={styles.subtitle}>{prod?.brand?.name}</p>
+            <span className={styles.title}>{prod?.name}</span>
+            <span className={styles.subtitle}>{prod?.brand?.name}</span>
           </div>
         </>
       ))}

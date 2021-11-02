@@ -1,17 +1,21 @@
 import styles from './main.module.css';
-import Recorder from '../components/recorder';
-import Video from '../components/video';
+import Recorder from '../components/recorderButton/recorder';
 import { submitSample, getSampleResults } from '../api/arCloud';
 import { useEffect, useState } from 'react';
 import { videoIds } from '../data/ids';
 import { getProducts, getProductTags } from '../api/products';
-import { ProductsView } from '../components/productsView';
-
+import { ProductsView } from '../components/productViews/productsView';
+import WavesSpectogram from '../components/icons/WavesSpectogram';
+import ResultHeader from '../components/resultHeader/ResultHeader';
+import AllProductsList from '../components/allProductsList/AllProductsList';
+import NavBar from '../components/navBar/NavBar';
+import { NO_VIDEO, NO_PRODUCTS } from '../utils/constants';
 const MainLayout = () => {
   const [fileId, setFileId] = useState(null);
   const [videoName, setVideoName] = useState('Nothing yet');
   const [videoResult, setVideoResult] = useState(null);
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [videoTags, setVideoTags] = useState([]);
   const [videoTime, setVideoTime] = useState(0);
 
@@ -27,26 +31,40 @@ const MainLayout = () => {
       setVideoResult(sampleResults);
       //get id
       const videoId = videoIds[sampleResults?.title];
-      setVideoName(videoId ?? 'Not found');
+      setVideoName(sampleResults?.title ?? 'Not found');
 
       //get products and tags based on id
-      if (videoId !== 'Not found' && videoId != null) {
+      if (videoName !== 'Not found' && videoId != null) {
         videoTagsLocal = await getProductTags(videoId);
         console.dir(videoTagsLocal);
         setVideoTags(videoTagsLocal);
         products = await getProducts(videoId);
+        setAllProducts(products);
+        setProducts(products);
         //Create an array with all the timeFrames
         timeFrames = generateTimeFramesArray(products, videoTagsLocal);
-      }
+        //initial time and timeout for increasing time
+        let time = (sampleResults?.db_end_time_offset_ms ?? 0) / 1000;
+        setVideoTime(time);
+        if (timeFrames) {
+          setInterval(() => {
+            time += 1;
+            setVideoTime(time);
+            // return an array with the ids
+            const timeFramesInRange = timeFrames.map((frame) => {
+              if (frame.time <= time && time <= frame.time + frame.duration) {
+                return frame.id;
+              }
+            });
+            setProducts(
+              products.filter((product) => {
+                if (timeFramesInRange.includes(Number(product.id)))
+                  return product;
+              })
+            );
+          }, 1000);
 
-      //initial time and timeout for increasing time
-      let time = (sampleResults?.db_end_time_offset_ms ?? 0) / 1000;
-      setVideoTime(time);
-      if (timeFrames) {
-        setInterval(() => {
-          time += 1;
-          setVideoTime(time);
-          // return an array with the ids
+          //initial products
           const timeFramesInRange = timeFrames.map((frame) => {
             if (frame.time <= time && time <= frame.time + frame.duration) {
               return frame.id;
@@ -54,23 +72,14 @@ const MainLayout = () => {
           });
           setProducts(
             products.filter((product) => {
-              if (timeFramesInRange.includes(Number(product.id)))
-                return product;
+              if (timeFramesInRange.includes(product.id)) return product;
             })
           );
-        }, 1000);
-
-        //initial products
-        const timeFramesInRange = timeFrames.map((frame) => {
-          if (frame.time <= time && time <= frame.time + frame.duration) {
-            return frame.id;
-          }
-        });
-        setProducts(
-          products.filter((product) => {
-            if (timeFramesInRange.includes(product.id)) return product;
-          })
-        );
+        } else {
+          setVideoResult(NO_PRODUCTS);
+        }
+      } else {
+        setVideoResult(NO_VIDEO);
       }
     }, 1000);
   };
@@ -84,29 +93,82 @@ const MainLayout = () => {
   }
 
   function generateTimeFramesArray(products, tags) {
-    // Create a map with all the tags, key = tag/product id
-    const tagsMap = generateTagsMap(tags);
-    let timeFramesArray = [];
-    // return 1 array with all timeFrames
-    for (let product of Object.values(products)) {
-      tagsMap.get(Number(product.id))?.[0]?.timeFrames?.map((frame) => {
-        timeFramesArray.push({
-          id: Number(product.id),
-          time: frame?.start || -1,
-          duration: frame?.end || 0,
+    if (products) {
+      // Create a map with all the tags, key = tag/product id
+      const tagsMap = generateTagsMap(tags);
+      let timeFramesArray = [];
+      // return 1 array with all timeFrames
+      for (let product of Object.values(products)) {
+        tagsMap.get(Number(product.id))?.[0]?.timeFrames?.map((frame) => {
+          timeFramesArray.push({
+            id: Number(product.id),
+            time: frame?.start || -1,
+            duration: frame?.end || 0,
+          });
         });
-      });
+      }
+      return timeFramesArray;
+    } else {
+      return null;
     }
-    return timeFramesArray;
   }
 
+  const DisplayData = ({ videoResult }) => {
+    let data;
+    switch (videoResult) {
+      case NO_VIDEO:
+        data = (
+          <span className={styles.errorText}>
+            Sorry, we did not find the video associated with this audio
+          </span>
+        );
+        break;
+      case null:
+        data = (
+          <div className={styles.waveSpectogram}>
+            <WavesSpectogram />
+          </div>
+        );
+        break;
+      case NO_PRODUCTS:
+        data = (
+          <span className={styles.errorText}>
+            Sorry, we did not find products associated with this video{' '}
+          </span>
+        );
+        break;
+      default:
+        data = (
+          <>
+            <ResultHeader videoName={videoName} videoTime={videoTime} />
+            <div className={styles.products}>
+              <ProductsView data={products} />
+            </div>
+            <div className={styles.allProductsList}>
+              <AllProductsList data={allProducts} />
+            </div>
+          </>
+        );
+        break;
+    }
+    return data;
+  };
+
   return (
-    <div className={styles.main}>
-      <Recorder returnFile={getFile} />
-      <Video name={videoName} />
-      <span>{`${videoTime} Seconds`}</span>
-      <div className={styles.products}>
-        <ProductsView data={products} />
+    <div className={styles.container}>
+      <NavBar />
+      <div className={styles.main}>
+        <DisplayData videoResult={videoResult} />
+        <Recorder
+          returnFile={getFile}
+          scanningFirstTime={
+            videoResult === null ||
+            videoResult === NO_VIDEO ||
+            videoResult === NO_PRODUCTS
+              ? true
+              : false
+          }
+        />
       </div>
     </div>
   );
