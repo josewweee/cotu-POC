@@ -1,7 +1,7 @@
 import styles from './main.module.css';
 import Recorder from '../components/recorderButton/recorder';
 import { submitSample, getSampleResults } from '../api/arCloud';
-import { useState, memo } from 'react';
+import { useState, memo, useEffect } from 'react';
 import { videoIds } from '../data/ids';
 import { getProducts, getProductTags } from '../api/products';
 import { ProductsView } from '../components/productViews/productsView';
@@ -21,6 +21,7 @@ const MainLayout = () => {
   const [videoTime, setVideoTime] = useState(0);
   const [timeInterval, setTimeInterval] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [processingAudio, setProcessingAudio] = useState(false);
   const MemoAllProductsList = memo(AllProductsList);
 
   const getFile = async (file) => {
@@ -119,11 +120,29 @@ const MainLayout = () => {
     }
   }
 
+  useEffect(() => {
+    if (isRecording) {
+      setProcessingAudio(true);
+    }
+  }, [isRecording]);
+
+  useEffect(() => {
+    if (isRecording) {
+      setProcessingAudio(true);
+    }
+  }, [isRecording]);
+
+  useEffect(() => {
+    if (videoResult != null) {
+      setProcessingAudio(false);
+    }
+  }, [videoResult]);
+
   return (
     <div className={styles.container}>
       <NavBar />
       <div className={styles.main}>
-        {videoResult === null && isRecording && (
+        {videoResult === null && processingAudio && (
           <div className={styles.waveSpectogram}>
             <WavesSpectogram />
           </div>
@@ -149,7 +168,7 @@ const MainLayout = () => {
             </div>
           </>
         )}
-        {videoResult === null && isRecording && <InformativeText />}
+        {processingAudio && <InformativeText />}
         <div onClick={() => !isRecording && setVideoResult(null)}>
           <Recorder
             returnFile={getFile}
