@@ -1,7 +1,7 @@
 import styles from './main.module.css';
 import Recorder from '../components/recorderButton/recorder';
 import { submitSample, getSampleResults } from '../api/arCloud';
-import { useEffect, useState, memo } from 'react';
+import { useState, memo } from 'react';
 import { videoIds } from '../data/ids';
 import { getProducts, getProductTags } from '../api/products';
 import { ProductsView } from '../components/productViews/productsView';
@@ -10,8 +10,9 @@ import ResultHeader from '../components/resultHeader/ResultHeader';
 import AllProductsList from '../components/allProductsList/AllProductsList';
 import NavBar from '../components/navBar/NavBar';
 import { NO_VIDEO, NO_PRODUCTS } from '../utils/constants';
+import InformativeText from '../components/informativeText/InformativeText';
+
 const MainLayout = () => {
-  const [fileId, setFileId] = useState(null);
   const [videoName, setVideoName] = useState('Nothing yet');
   const [videoResult, setVideoResult] = useState(null);
   const [products, setProducts] = useState([]);
@@ -19,6 +20,7 @@ const MainLayout = () => {
   const [videoTags, setVideoTags] = useState([]);
   const [videoTime, setVideoTime] = useState(0);
   const [timeInterval, setTimeInterval] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
   const MemoAllProductsList = memo(AllProductsList);
 
   const getFile = async (file) => {
@@ -121,7 +123,7 @@ const MainLayout = () => {
     <div className={styles.container}>
       <NavBar />
       <div className={styles.main}>
-        {videoResult === null && (
+        {videoResult === null && isRecording && (
           <div className={styles.waveSpectogram}>
             <WavesSpectogram />
           </div>
@@ -147,16 +149,20 @@ const MainLayout = () => {
             </div>
           </>
         )}
-        <Recorder
-          returnFile={getFile}
-          scanningFirstTime={
-            videoResult === null ||
-            videoResult === NO_VIDEO ||
-            videoResult === NO_PRODUCTS
-              ? true
-              : false
-          }
-        />
+        {videoResult === null && isRecording && <InformativeText />}
+        <div onClick={() => !isRecording && setVideoResult(null)}>
+          <Recorder
+            returnFile={getFile}
+            scanningFirstTime={
+              videoResult === null ||
+              videoResult === NO_VIDEO ||
+              videoResult === NO_PRODUCTS
+                ? true
+                : false
+            }
+            recordingStatus={setIsRecording}
+          />
+        </div>
       </div>
     </div>
   );

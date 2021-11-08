@@ -1,0 +1,10 @@
+.text {
+  color: #f88423;
+  font-family: Lexend Deca;
+  font-size: 24px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  white-space: nowrap;
+}
