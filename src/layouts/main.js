@@ -5,12 +5,12 @@ import { useState, memo, useEffect } from 'react';
 import { videoIds } from '../data/ids';
 import { getProducts, getProductTags } from '../api/products';
 import { ProductsView } from '../components/productViews/productsView';
-import WavesSpectogram from '../components/icons/WavesSpectogram';
 import ResultHeader from '../components/resultHeader/ResultHeader';
 import AllProductsList from '../components/allProductsList/AllProductsList';
 import NavBar from '../components/navBar/NavBar';
 import { NO_VIDEO, NO_PRODUCTS } from '../utils/constants';
 import InformativeText from '../components/informativeText/InformativeText';
+import WaveSpectogram from '../components/waveSpectogram/waveSpectogram';
 
 const MainLayout = () => {
   const [videoName, setVideoName] = useState('Nothing yet');
@@ -144,7 +144,8 @@ const MainLayout = () => {
       <div className={styles.main}>
         {videoResult === null && processingAudio && (
           <div className={styles.waveSpectogram}>
-            <WavesSpectogram />
+            {/* <WavesSpectogram /> */}
+            <WaveSpectogram width={298} height={56} />
           </div>
         )}
         {videoResult === NO_PRODUCTS && (
