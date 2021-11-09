@@ -5,7 +5,12 @@ import StopRecording from '../icons/StopRecording';
 import NewRecord from '../icons/NewRecord';
 import styles from './recorderButton.module.css';
 
-const Recorder = ({ returnFile, scanningFirstTime, recordingStatus }) => {
+const Recorder = ({
+  returnFile,
+  scanningFirstTime,
+  recordingStatus,
+  processingAudio,
+}) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recorder, setRecorder] = useState(new MicRecorder({ bitRate: 128 }));
 
@@ -85,14 +90,10 @@ const Recorder = ({ returnFile, scanningFirstTime, recordingStatus }) => {
     <>
       <div className={styles.container}>
         <div
-          className={
-            scanningFirstTime
-              ? styles.cleanCircleContainer
-              : styles.outlineCircle
-          }
+          className={styles.cleanCircleContainer}
           onClick={() => startRecording()}
         >
-          {isRecording ? (
+          {processingAudio ? (
             <>
               <div className={styles.outlineCircleAnimated}></div>
               <div className={styles.stopIcon}>
@@ -104,7 +105,7 @@ const Recorder = ({ returnFile, scanningFirstTime, recordingStatus }) => {
           )}
         </div>
         <RecordingText
-          isRecording={isRecording}
+          isRecording={processingAudio}
           scanningFirstTime={scanningFirstTime}
         />
       </div>

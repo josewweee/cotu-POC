@@ -144,7 +144,6 @@ const MainLayout = () => {
       <div className={styles.main}>
         {videoResult === null && processingAudio && (
           <div className={styles.waveSpectogram}>
-            {/* <WavesSpectogram /> */}
             <WaveSpectogram width={298} height={56} />
           </div>
         )}
@@ -181,6 +180,7 @@ const MainLayout = () => {
                 : false
             }
             recordingStatus={setIsRecording}
+            processingAudio={processingAudio}
           />
         </div>
       </div>

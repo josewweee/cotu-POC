@@ -6,6 +6,7 @@ function StopRecording(props) {
       width={48}
       {...props}
       viewBox="0 0 20 20"
+      transform="scale(2.2)"
     >
       <path fill="none" d="M0 0h20v20H0z" />
       <path
